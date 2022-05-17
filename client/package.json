@@ -1,0 +1,24 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "parcel ./index.html",
+    "server": "ts-node-dev --respawn src/server/main",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^17.0.34",
+    "parcel": "^2.5.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "dungeon-factory": "^1.0.6",
+    "phaser": "^3.55.2"
+  }
+}
