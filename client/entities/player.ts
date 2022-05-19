@@ -1,31 +1,45 @@
 import Phaser from "phaser";
 import Graphics from "../assets/Graphics";
+import { GameServer } from "../services/game-server";
 
 const speed = 150;
 
-export default class Player {
-  public sprite: Phaser.Physics.Arcade.Sprite;
-  private keys: Phaser.Types.Input.Keyboard.CursorKeys;
+export class Frog {
+    public sprite: Phaser.Physics.Arcade.Sprite;
+    public keys: Phaser.Types.Input.Keyboard.CursorKeys;
+    public id;
+    step = 0;;
 
-  constructor(x: number, y: number, scene: Phaser.Scene) {
-    for (let animName in Graphics.player.frames) {
-      scene.anims.create({
-        key: `player-${animName}`,
-        frames: scene.anims.generateFrameNumbers(
-          "player",
-          Graphics.player.frames[animName]
-        ),
-        frameRate: 16,
-        repeat: -1
-      });
+    constructor(x: number, y: number, scene: Phaser.Scene, id: any) {
+        this.id = id;
+      for (let animName in Graphics.player.frames) {
+        scene.anims.create({
+          key: `player-${animName}`,
+          frames: scene.anims.generateFrameNumbers(
+            "player",
+            Graphics.player.frames[animName]
+          ),
+          frameRate: 16,
+          repeat: -1
+        });
+      }
+  
+      this.sprite = scene.physics.add.sprite(x, y, id, 0);
+      
+      this.sprite.setTint(parseInt(id.slice(0,6), 16));
+      // this.sprite.setSize(13, 12);
+      // this.sprite.setOffset(9, 16);
+      this.sprite.anims.play("player-idle");
+  
+      this.keys = scene.input.keyboard.createCursorKeys();
     }
+}
 
-    this.sprite = scene.physics.add.sprite(x, y, "player", 0);
-    // this.sprite.setSize(13, 12);
-    // this.sprite.setOffset(9, 16);
-    this.sprite.anims.play("player-idle");
-
-    this.keys = scene.input.keyboard.createCursorKeys();
+export default class Player extends Frog {
+    gameServer: GameServer;
+  constructor(x: number, y: number, scene: Phaser.Scene, id: any, gameServer: GameServer) {
+    super(x, y, scene, id)
+    this.gameServer = gameServer;
   }
 
   update() {
@@ -60,5 +74,10 @@ export default class Player {
     }
     // Normalize and scale the velocity so that sprite can't move faster along a diagonal
     body.velocity.normalize().scale(speed);
+
+    
+    // if(this.gameServer) {
+    //     this.gameServer.move({position: [body.position.x, body.position.y]})
+    // }
   }
 }

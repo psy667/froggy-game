@@ -22,12 +22,12 @@ const generateMap = (w, h) => {
 }
 
 
-export default class Map {
+export default class GameMap {
   public readonly tiles: Array<Array<Tile>>;
   public readonly width: number;
   public readonly height: number;
   public readonly tilemap: Phaser.Tilemaps.Tilemap;
-  public readonly wallLayer: Phaser.Types.Tilemaps.StaticTilemapLayer;
+  public readonly wallLayer: Phaser.Tilemaps.TilemapLayer;
 
   public readonly startingX: number;
   public readonly startingY: number;

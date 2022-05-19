@@ -39,7 +39,7 @@ export default class Tile {
   isEnclosed(): boolean {
     return (
       Object.values(this.neighbours()).filter(
-        t => !t || t.type === TileType.Wall
+        t => !t || t.type === TileType.Water
       ).length === 8
     );
   }
